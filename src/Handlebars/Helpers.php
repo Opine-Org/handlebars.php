@@ -105,10 +105,14 @@ class Helpers
 		$tmp = $context->get($args);
 		$buffer = '';
 		if (is_array($tmp) || $tmp instanceof Traversable) {
-			foreach ($tmp as $var) {
+			$index = 0;
+            foreach ($tmp as $key => $var) {
+                $var['@index'] = $index;
+                $var['@key'] = $key;
 				$context->push($var);
 				$buffer .= $template->render($context);
 				$context->pop();
+                $index++;
 			}
 		}
 		return $buffer;
