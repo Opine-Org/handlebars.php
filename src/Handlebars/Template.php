@@ -223,6 +223,31 @@ class Template
     }
 
     /**
+     * Provide tag parsing method for helpers
+     */
+    
+    public funcion htmlArgsToArray () {
+        $attributes = [];
+        $pattern = '#(?(DEFINE)
+            (?<name>[a-zA-Z][a-zA-Z0-9-:]*)
+            (?<value_double>"[^"]+")
+            (?<value_single>\'[^\']+\')
+            (?<value_none>[^\s>]+)
+            (?<value>((?&value_double)|(?&value_single)|(?&value_none)))
+        )
+        (?<n>(?&name))(=(?<v>(?&value)))?#xs';
+ 
+        if (preg_match_all($pattern, $text, $matches, PREG_SET_ORDER)) {
+            foreach ($matches as $match) {
+                $attributes[$match['n']] = isset($match['v'])
+                    ? trim($match['v'], '\'"')
+                    : null;
+            }
+        }
+        return $attributes;
+    }
+
+    /**
      * Process section nodes
      *
      * @param Context $context current context
