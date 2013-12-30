@@ -226,7 +226,7 @@ class Template
      * Provide tag parsing method for helpers
      */
     
-    public funcion htmlArgsToArray () {
+    public function htmlArgsToArray () {
         $attributes = [];
         $pattern = '#(?(DEFINE)
             (?<name>[a-zA-Z][a-zA-Z0-9-:]*)
