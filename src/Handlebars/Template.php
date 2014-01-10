@@ -363,11 +363,7 @@ class Template
         if ($escaped) {
             $args = $this->handlebars->getEscapeArgs();
             array_unshift($args, $value);
-            $values = array_values($args);
-            if (is_array($values[0])) {
-                return '';
-            }
-            $value = call_user_func_array($this->handlebars->getEscape(), $values);
+            $value = call_user_func_array($this->handlebars->getEscape(), array_values($args));
         }
         return $value;
     }
